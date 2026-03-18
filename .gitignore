@@ -1,0 +1,14 @@
+# Vivado
+*.jou
+*.log
+*.str
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.Xil/
+vivado_project/
+
+# OS
+.DS_Store
