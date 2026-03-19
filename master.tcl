@@ -23,4 +23,3 @@ set proj_dir "$root_dir/vivado_project"
 set xpr_file "$proj_dir/$proj_name.xpr"
 
 start_gui
-open_project $xpr_file
