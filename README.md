@@ -51,7 +51,7 @@ Run the following command from the project root:
 ```bash
 vivado -mode tcl -source master.tcl
 ```
-
+> Note: Make sure to add ur vivado bin path int he environmental problems.
 ---
 
 ## ⚙️ What This Does
