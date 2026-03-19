@@ -1,23 +1,22 @@
 module tb_mlkem;
 
     reg clk;
-    reg rst;
+    reg reset;
 
     // DUT
     mlkem_accelerator uut (
         .clk(clk),
-        .reset(rst)
+        .reset(reset)
     );
 
-    // Clock
     always #5 clk = ~clk;
 
     initial begin
         clk = 0;
-        rst = 1;
+        reset = 1;
 
         #20;
-        rst = 0;
+        reset = 0;
 
         #1000;
 

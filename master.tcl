@@ -1,5 +1,5 @@
 # ============================================================
-# MASTER SCRIPT (STABLE VERSION)
+# MASTER SCRIPT
 # ============================================================
 
 set root_dir [file normalize [file dirname [info script]]]
@@ -9,17 +9,18 @@ cd $root_dir
 
 puts "========== MLKEM PROJECT SETUP =========="
 
-# Step 1: Build project + RTL
+# Step 1: Build project (RTL + TB)
 source [file join $scripts_dir "build_project.tcl"]
 
 # Step 2: Add constraints
 source [file join $scripts_dir "add_constraints.tcl"]
 
-# ❌ DISABLE BD for now (important)
-# source [file join $scripts_dir "create_bd.tcl"]
+puts "========== OPENING PROJECT =========="
 
-# ❌ Optional (enable later)
-# source [file join $scripts_dir "run_sim.tcl"]
-# source [file join $scripts_dir "run_synth.tcl"]
+# Open Vivado GUI with project
+set proj_name "mlkem_zynq"
+set proj_dir "$root_dir/vivado_project"
+set xpr_file "$proj_dir/$proj_name.xpr"
 
-puts "========== BASIC PROJECT READY =========="
+start_gui
+open_project $xpr_file

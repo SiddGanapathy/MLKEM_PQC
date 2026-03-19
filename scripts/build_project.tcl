@@ -9,7 +9,7 @@ set root_dir [file normalize "$origin_dir/.."]
 # Project config
 set proj_name "mlkem_zynq"
 set proj_dir "$root_dir/vivado_project"
-set part_name "xc7z020clg400-1"   ;# Zynq-7000
+set part_name "xc7z020clg400-1"
 
 # ============================================================
 # Create Project
@@ -22,7 +22,7 @@ create_project $proj_name $proj_dir -part $part_name -force
 set_property target_language Verilog [current_project]
 
 # ============================================================
-# Add RTL Files
+# ADD RTL FILES
 # ============================================================
 
 set rtl_dir "$root_dir/rtl"
@@ -44,18 +44,43 @@ foreach file $vhdl_files {
 }
 
 # ============================================================
-# Set Top Module (CHANGE if needed)
+# SET DESIGN TOP
 # ============================================================
 
 set top_module "mlkem_accelerator"
-puts "Setting top module: $top_module"
+puts "Setting design top: $top_module"
 
 set_property top $top_module [current_fileset]
 
+update_compile_order -fileset sources_1
+
 # ============================================================
-# Compile Order
+# ADD TESTBENCH (SIMPLE)
 # ============================================================
 
-update_compile_order -fileset sources_1
+set tb_dir "$root_dir/tb"
+
+if {[file exists $tb_dir]} {
+
+    puts "Adding testbench files..."
+
+    set tb_files [concat \
+        [glob -nocomplain "$tb_dir/*.sv"] \
+        [glob -nocomplain "$tb_dir/*.v"]]
+
+    foreach file $tb_files {
+        puts "Adding TB: $file"
+        add_files -fileset sim_1 $file
+    }
+
+    # Set simulation top (no validation)
+    set sim_top "tb_mlkem"
+    puts "Setting simulation top: $sim_top"
+
+    set_property top $sim_top [get_filesets sim_1]
+
+} else {
+    puts "No testbench folder found"
+}
 
 puts "Build project step complete!"
